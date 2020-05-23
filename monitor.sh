@@ -1,0 +1,1 @@
+watch -n 1 'mdadm --detail /dev/md1 | head -n21 | egrep -vi "(total|active|working|spare|failed) devices" ; zpool status test ; echo ; ls -l /dev/disk/by-id | grep ST1200 | grep -v part | awk "{print \$11}" | sed "s#../../#/dev/#" | xargs iostat --human -xy 1 1 /dev/md1 '
