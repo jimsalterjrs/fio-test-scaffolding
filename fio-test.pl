@@ -33,16 +33,6 @@ if ($rawsync eq 'sync') {
 	$sync = '--fsync=1 --end_fsync=1';
 } else {
 	$sync = '--end_fsync=1';
-	if ($ARGV[1] eq '4K') { 
-		# 4K async tests have to be insanely long to keep
-	        # filesystems from just batching the entire damn test.
-	        # only way to deal with this is large job size but
-	        # --time_based=1 and small --runtime.
-		#
-		# which STILL queues up 5m+ worth of writes >=[
-		#
-		$sync .= '--time_based=1 --runtime=1';
-	} 
 }
 
 if ($rawrw eq 'read') { $sync = ''; } # sync not applicable to read
