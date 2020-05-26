@@ -31,11 +31,11 @@ $result=loop('write','1M','1','8G','async'); print " $result\n";
 $result=loop('write','1M','1','1G','sync'); print " $result\n";
 $result=loop('read','1M','1','8G','async'); print " $result\n";
 print "\n";
-$result=loop('write','4K','8','512M','async'); print " $result\n";
+$result=loop('write','4K','8','2G','async'); print " $result\n";
 $result=loop('write','4K','8','16M','sync'); print " $result\n";
 $result=loop('read','4K','8','2G','async'); print " $result\n";
 print "\n";
-$result=loop('write','4K','1','512M','async'); print " $result\n";
+$result=loop('write','4K','1','2G','async'); print " $result\n";
 $result=loop('write','4K','1','16M','sync'); print " $result\n";
 $result=loop('read','4K','1','8G','async'); print " $result\n";
 
