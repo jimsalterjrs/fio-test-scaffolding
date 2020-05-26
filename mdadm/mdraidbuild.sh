@@ -11,9 +11,9 @@
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 # WARNING WARNING WARNING WARNING WARNING
 
-if [ $# -ne 2 ]
+if [ $# -ne 3 ]
   then
-    echo "This script needs two arguments: RAID level, and number of disks."
+    echo "This script needs three arguments: RAID level, number of disks, and bitmap (none/internal)."
     echo
     echo "WARNING: this script assumes all Seagate 12TB disks it can find"
     echo "are test disks, and will do VERY DESTRUCTIVE THINGS to them!"
@@ -24,17 +24,21 @@ fi
 
 LEVEL=$1
 NUM=$2
+BITMAP=$3
 
-# tear down any test pool or mdraid array.
+# tear down any test mdraid array (/dev/md1, /test).
 umount /test
 mdadm --stop /dev/md1
-zpool export test
+#zpool export test
 
 # get rid of any mdraid or ZFS headers on part1 of all test disks
 for disk in `ls /dev/disk/by-id | grep ST1200 | grep part1 | sed 's#^#/dev/disk/by-id/#'`; do wipefs -a $disk; done
 
-# build array RAID$LEVEL of $NUM test disks
-ls /dev/disk/by-id | grep ST1200 | grep part1 | head -n$NUM | sed 's#^#/dev/disk/by-id/#' | xargs mdadm --create /dev/md1 --assume-clean -b none -l$LEVEL -n$NUM
+# give system time to settle
+sleep 5
 
-# output status of /dev/md1
-mdadm --detail /dev/md1
+# build array RAID$LEVEL of $NUM test disks with bitmap type $BITMAP
+ls /dev/disk/by-id | grep ST1200 | grep part1 | head -n$NUM | sed 's#^#/dev/disk/by-id/#' | xargs mdadm --create /dev/md1 --assume-clean -l$LEVEL -n$NUM -b$BITMAP
+
+# output abbreviated status of /dev/md1
+mdadm --detail /dev/md1 | grep -B20 Consistency | egrep -v '(Active|Failed|Working|Spare) Devices' | grep -v "Used Dev Size" | grep -v "Total Devices" | grep -v "Update Time"
