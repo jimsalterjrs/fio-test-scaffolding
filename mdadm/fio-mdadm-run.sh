@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# single disk, ext4
+echo "single disk, ext4"
 	umount /test
 	mdadm --stop /dev/md1
 	DISK=`ls /dev/disk/by-id | grep ST1200 | grep part1 | head -n 1 | sed 's#^#/dev/disk/by-id/#'`
@@ -11,7 +11,7 @@
 	echo 
 	./fio-mdadm-full-test.pl
 
-# mdraid10, internal bitmap, ext4
+echo "mdraid10, internal bitmap, ext4"
 
 	# mdraid"10" 2 disks is just mdraid1 2 disks
 	./mdraidbuild.sh 1 2 internal
@@ -27,7 +27,7 @@
 	  ./fio-mdadm-full-test.pl
 	done
 
-# mdraid6, internal bitmap, ext4
+echo "mdraid6, internal bitmap, ext4"
 
 	# mdraid"6" 3 disks is just mdraid5 3 disks
 	./mdraidbuild.sh 5 3 internal
@@ -43,7 +43,7 @@
 	  ./fio-mdadm-full-test.pl
 	done
 
-# mdraid10, no bitmap, ext4
+echo "mdraid10, no bitmap, ext4"
 
 	# mdraid"10" 2 disks is just mdraid1 2 disks
 	./mdraidbuild.sh 1 2 none
@@ -59,7 +59,7 @@
 	  ./fio-mdadm-full-test.pl
 	done
 
-# mdraid6, no bitmap, ext4
+echo "mdraid6, no bitmap, ext4"
 
 	# mdraid"6" 3 disks is just mdraid5 3 disks
 	./mdraidbuild.sh 5 3 none
@@ -75,7 +75,7 @@
 	  ./fio-mdadm-full-test.pl
 	done
 
-# single disk, xfs
+echo "single disk, xfs"
 	umount /test
 	mdadm --stop /dev/md1
 	DISK=`ls /dev/disk/by-id | grep ST1200 | grep part1 | head -n 1 | sed 's#^#/dev/disk/by-id/#'`
@@ -87,8 +87,7 @@
 	./fio-mdadm-full-test.pl
 
 
-# mdraid10, no bitmap, xfs
-
+echo "mdraid10, no bitmap, xfs"
 	# mdraid"10" 2 disks is just mdraid1 2 disks
 	./mdraidbuild.sh 1 2 none
 	wipefs -a /dev/md1
@@ -105,7 +104,7 @@
 	  ./fio-mdadm-full-test.pl
 	done
 
-# mdraid6, no bitmap, xfs
+echo "mdraid6, no bitmap, xfs"
 
 	# mdraid"6" 3 disks is just mdraid5 3 disks
 	./mdraidbuild.sh 5 3 none
