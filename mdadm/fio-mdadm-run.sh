@@ -11,7 +11,7 @@
 	echo 
 	./fio-mdadm-full-test.pl
 
-# mdraid10, internal bitmap
+# mdraid10, internal bitmap, ext4
 
 	# mdraid"10" 2 disks is just mdraid1 2 disks
 	./mdraidbuild.sh 1 2 internal
@@ -27,7 +27,7 @@
 	  ./fio-mdadm-full-test.pl
 	done
 
-# mdraid6, internal bitmap
+# mdraid6, internal bitmap, ext4
 
 	# mdraid"6" 3 disks is just mdraid5 3 disks
 	./mdraidbuild.sh 5 3 internal
@@ -43,7 +43,7 @@
 	  ./fio-mdadm-full-test.pl
 	done
 
-# mdraid10, no bitmap
+# mdraid10, no bitmap, ext4
 
 	# mdraid"10" 2 disks is just mdraid1 2 disks
 	./mdraidbuild.sh 1 2 none
@@ -59,7 +59,7 @@
 	  ./fio-mdadm-full-test.pl
 	done
 
-# mdraid6, no bitmap
+# mdraid6, no bitmap, ext4
 
 	# mdraid"6" 3 disks is just mdraid5 3 disks
 	./mdraidbuild.sh 5 3 none
